@@ -3,10 +3,12 @@ import tornado.web
 import tornado.options
 from tornado.options import define, options
 from tornado.web import RequestHandler
-import tornado.httpserver
+from tornado import httpserver
 import tornado.ioloop
 import base64
+from tornado import web
 import cv2
+import os
 import numpy as np
 
 PATH = "./images"
@@ -33,9 +35,31 @@ class UploadHandler(RequestHandler):
             cv2.imwrite(path, img)
 
 
+class WXHandler(RequestHandler):
+    def get(self):
+        self.write("hello world")
+
+    def post(self):
+        img_list = self.request.files['file']
+        for img in img_list:
+            filename = img['filename']
+            img_str = img['body']
+            path = '{}/{}'.format(PATH, filename)
+            img_np = np.frombuffer(img_str, np.uint8)
+            img = cv2.imdecode(img_np, cv2.COLOR_RGB2BGR)
+            cv2.imwrite(path, img)
+        stu = {
+            "name": "johny",
+            "gender": "girl",
+            "age": 12
+        }
+        stu_json = json.dumps(stu)
+        self.write(stu_json)
+
+
 class Application(tornado.web.Application):
     def __init__(self):
-        handlers = [(r'/upload', UploadHandler)]
+        handlers = [(r'/upload', UploadHandler), (r'/wx', WXHandler)]
         super(Application, self).__init__(handlers)
 
 
