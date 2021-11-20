@@ -11,7 +11,7 @@ import numpy as np
 
 PATH = "./images"
 
-define('port', default=8080, help='run port', type=int)
+define('port', default=80, help='run port', type=int)
 
 
 class UploadHandler(RequestHandler):
