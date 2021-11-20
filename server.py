@@ -19,6 +19,7 @@ class UploadHandler(RequestHandler):
         self.write("hello world")
 
     def post(self):
+        print(self.request.body.decode('utf-8'))
         img_list = json.loads(self.request.body.decode('utf-8'))['picture']
         for img in img_list:
             filename = img['filename']
