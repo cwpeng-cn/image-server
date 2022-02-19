@@ -13,7 +13,7 @@ import numpy as np
 
 PATH = "./images"
 
-define('port', default=80, help='run port', type=int)
+define('port', default=10086, help='run port', type=int)
 
 
 class UploadHandler(RequestHandler):
@@ -48,13 +48,11 @@ class WXHandler(RequestHandler):
             img_np = np.frombuffer(img_str, np.uint8)
             img = cv2.imdecode(img_np, cv2.COLOR_RGB2BGR)
             cv2.imwrite(path, img)
-        stu = {
-            "name": "johny",
-            "gender": "girl",
-            "age": 12
-        }
-        stu_json = json.dumps(stu)
-        self.write(stu_json)
+
+        with open('hah.jpg', 'rb') as f:
+            img_byte = base64.b64encode(f.read())
+        self.write(img_byte)
+
 
 
 class Application(tornado.web.Application):
