@@ -11,8 +11,9 @@ def getByte(path):
 
 
 img_str = getByte('hah.jpg')
-url = 'http://www.cwpeng.cn/upload'
-# url = 'http://127.0.0.1:80/upload'
+url = 'http://www.cwpeng.cn'
+# url = 'http://127.0.0.1:/upload'
 data = {'picture': [{"filename": "hah.jpg", "content": img_str}]}
 json_mod = json.dumps(data)
 res = requests.post(url=url, data=json_mod)
+print(res)

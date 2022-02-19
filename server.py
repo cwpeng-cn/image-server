@@ -21,7 +21,8 @@ class UploadHandler(RequestHandler):
         self.write("hello world")
 
     def post(self):
-        print(self.request.body.decode('utf-8'))
+        # print(self.request.body.decode('utf-8'))
+        print("success post")
         img_list = json.loads(self.request.body.decode('utf-8'))['picture']
         for img in img_list:
             filename = img['filename']
@@ -52,7 +53,6 @@ class WXHandler(RequestHandler):
         with open('hah.jpg', 'rb') as f:
             img_byte = base64.b64encode(f.read())
         self.write(img_byte)
-
 
 
 class Application(tornado.web.Application):
